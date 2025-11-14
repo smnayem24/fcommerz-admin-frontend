@@ -5,10 +5,9 @@ import CustomPagination from "@/components/pagination";
 import CustomTable from "@/components/table";
 import Button from "@/components/ui/button";
 import { API_END_POINTS } from "@/config/endPoints";
-import UserForm from "@/forms/user";
+import ProductForm from "@/forms/product";
 import UserSearch from "@/forms/userSearch";
 import { useFetchProducts } from "@/hooks/paginated_search/useFetchProducts";
-import { useFetchUsers } from "@/hooks/paginated_search/useFetchUsers";
 import { useDeleteData } from "@/hooks/useDeleteData";
 import { useGetIdData } from "@/hooks/useGetIdData";
 import { usePostData } from "@/hooks/usePostData";
@@ -38,7 +37,7 @@ const ProductPage = () => {
     price: "",
     normalPrice: "",
     discountPrice: "",
-    images: "",
+    image: "",
     createdFor: "",
   });
   const [isModalOpen, setIsModalOpen] = useState({
@@ -82,8 +81,8 @@ const ProductPage = () => {
         price: result?.data?.price,
         normalPrice: result?.data?.normalPrice,
         discountPrice: result?.data?.discountPrice,
-        images: result?.data?.images,
-        createdFor: result?.data?.createdFor,
+        image: result?.data?.image,
+        createdFor: result?.data?.createdFor?._id,
       });
       setTimeout(() => {
         if (form) {
@@ -93,8 +92,8 @@ const ProductPage = () => {
             price: result?.data?.price,
             normalPrice: result?.data?.normalPrice,
             discountPrice: result?.data?.discountPrice,
-            images: result?.data?.images,
-            createdFor: result?.data?.createdFor,
+            image: result?.data?.image,
+            createdFor: result?.data?.createdFor?._id,
           });
         }
       }, 0);
@@ -304,7 +303,7 @@ const ProductPage = () => {
             onFinish={modalTitle === "Add" ? onFinish : onEditFinish}
           >
             <div className="grid grid-cols-1 p-3">
-              <UserForm setCreateState={setFormState} createState={formState} />
+              <ProductForm setCreateState={setFormState} createState={formState} />
               <div className="flex justify-end mt-3">
                 <div
                   style={{ marginRight: "4px" }}
