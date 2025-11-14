@@ -10,7 +10,9 @@ import UserSearch from "@/forms/userSearch";
 import { useFetchUsers } from "@/hooks/paginated_search/useFetchUsers";
 import { useDeleteData } from "@/hooks/useDeleteData";
 import { useGetIdData } from "@/hooks/useGetIdData";
+import { usePostData } from "@/hooks/usePostData";
 import { usePutData } from "@/hooks/usePutData";
+import { removeEmptyKeys } from "@/utils/removeEmptyKeys";
 import { Form, message, Space, Tooltip } from "antd";
 import React, { useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
@@ -40,6 +42,12 @@ const UserPage = () => {
   });
 
   const { data, isLoading, refetch } = useFetchUsers(searchState);
+
+  const { postData } = usePostData({
+    endpoint: API_END_POINTS.createUser,
+
+    body: removeEmptyKeys(formState),
+  });
 
   const { refetchDataById } = useGetIdData({
     endpoint: API_END_POINTS.getUserById,
@@ -102,6 +110,7 @@ const UserPage = () => {
       ...isModalOpen,
       main: true,
     });
+    setModalTitle("Add");
   };
 
   const handleCancel = () => {
@@ -111,6 +120,33 @@ const UserPage = () => {
       ...isModalOpen,
       main: false,
     });
+  };
+
+  const onFinish = async () => {
+    const response = await postData(removeEmptyKeys(formState));
+    if (response?.isSuccess) {
+      messageApi.open({
+        type: "success",
+        content: response?.message,
+      });
+      clearFormState();
+      if (searchState.page === 0) {
+        refetch();
+      } else {
+        setSearchState({
+          page: 0,
+          type: "",
+        });
+      }
+      handleCancel();
+    } else {
+      messageApi.error({
+        type: "error",
+        content: response?.message,
+      });
+      clearFormState();
+    }
+    form.resetFields();
   };
 
   const onEditFinish = async () => {
@@ -236,7 +272,11 @@ const UserPage = () => {
           title={modalTitle === "Add" ? "Add User" : "Edit User"}
           open={isModalOpen.main}
         >
-          <Form form={form} className="mt-6" onFinish={onEditFinish}>
+          <Form
+            form={form}
+            className="mt-6"
+            onFinish={modalTitle === "Add" ? onFinish : onEditFinish}
+          >
             <div className="grid grid-cols-1 p-3">
               <UserForm setCreateState={setFormState} createState={formState} />
               <div className="flex justify-end mt-3">

@@ -1,36 +1,10 @@
 import React from "react";
 import Input from "@/components/ui/input";
-import Select from "@/components/ui/select";
 import { Form } from "antd";
-import Checkbox from "@/components/ui/checkbox";
 
-const UserForm = ({ setCreateState, createState, options }) => {
+const UserForm = ({ setCreateState, createState }) => {
   return (
     <>
-      <Form.Item
-        name="phone"
-        rules={[
-          {
-            required: true,
-            message: "Please insert phone",
-          },
-        ]}
-      >
-        <div>
-          <Input
-            type={"number"}
-            placeholder="Phone Number"
-            labelText={"Phone Number"}
-            onChange={(e) => {
-              setCreateState({
-                ...createState,
-                phone: e.target.value,
-              });
-            }}
-            value={createState?.phone}
-          />
-        </div>
-      </Form.Item>
       <Form.Item
         name="name"
         rules={[
@@ -79,28 +53,28 @@ const UserForm = ({ setCreateState, createState, options }) => {
           />
         </div>
       </Form.Item>
+
       <Form.Item
-        name="active"
+        name="password"
         rules={[
           {
-            required: false,
-            message: "Please Select.",
+            required: true,
+            message: "Please insert password!",
           },
         ]}
       >
         <div>
-          <Checkbox
-            id={"IsActive"}
-            name={"IsActive"}
-            labelText={"IsActive"}
+          <Input
+            type={"text"}
+            placeholder="Password"
+            labelText={"Password"}
             onChange={(e) => {
-              console.log(e.target.checked, "e.target.checked");
               setCreateState({
                 ...createState,
-                active: e.target.checked,
+                password: e.target.value,
               });
             }}
-            value={createState?.active}
+            value={createState?.password}
           />
         </div>
       </Form.Item>
