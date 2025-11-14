@@ -1,23 +1,16 @@
-export const HEADER_TAB = [
-  {
-    name: "Login",
-    link: "/login",
-  },
-];
-
 export const PROFILE_TAB = [
-  {
-    label: "Profile",
-    link: "/profile",
-  },
-  {
-    label: "Ticket List",
-    link: "/ticket-list",
-  },
-  {
-    label: "Change Password",
-    link: "/changepassword",
-  },
+  // {
+  //   label: "Profile",
+  //   link: "/profile",
+  // },
+  // {
+  //   label: "Ticket List",
+  //   link: "/ticket-list",
+  // },
+  // {
+  //   label: "Change Password",
+  //   link: "/changepassword",
+  // },
   {
     label: "Sign Out",
     link: "/",

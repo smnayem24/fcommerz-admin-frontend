@@ -1,4 +1,4 @@
-import { HEADER_TAB, PROFILE_TAB } from "@/config/headerOption";
+import { PROFILE_TAB } from "@/config/headerOption";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -44,15 +44,6 @@ const Navbar = ({ showDrawer }) => {
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-2">
-              {HEADER_TAB?.map((item, index) => (
-                <Link
-                  key={index}
-                  href={item?.link}
-                  className="text-white bg-primary relative hover:bg-orange transition duration-500 ease-in-out px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  {item?.name}
-                </Link>
-              ))}
               <div className="px-3">
                 <CustomDropdown
                   items={PROFILE_TAB}
