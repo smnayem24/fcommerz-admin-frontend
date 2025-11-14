@@ -23,18 +23,16 @@ const UserPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [searchState, setSearchState] = useState({
     page: 0,
-    phone: "",
     email: "",
+    name: "",
+    password: "",
   });
 
   const [formState, setFormState] = useState({
     id: "",
-    phone: "",
-    name: "",
-    active: "",
-    address: "",
-    userTypeId: "",
     email: "",
+    name: "",
+    password: "",
   });
   const [isModalOpen, setIsModalOpen] = useState({
     main: false,
@@ -42,7 +40,7 @@ const UserPage = () => {
   });
 
   const { data, isLoading, refetch } = useFetchUsers(searchState);
-  console.log(data?.data?.response?.data, "datadatadatadata");
+
   const { refetchDataById } = useGetIdData({
     endpoint: API_END_POINTS.getUserById,
   });
@@ -51,13 +49,13 @@ const UserPage = () => {
     endpoint: API_END_POINTS.updateUserById,
     body: formState,
   });
+
   const { deleteDataById } = useDeleteData({
     endpoint: API_END_POINTS.deleteUserById,
   });
 
   const _handelEdit = async (id) => {
     const result = await refetchDataById(id);
-    console.log(result, "result");
     if (result.isSuccess) {
       setIsModalOpen({
         ...isModalOpen,
@@ -67,21 +65,15 @@ const UserPage = () => {
       setFormState({
         id: id,
         email: result?.data?.email,
-        phone: result?.data?.phone,
-        name: result?.data?.user_name,
-        active: result?.data?.active === 1 ? true : false,
-        address: result?.data?.address,
-        userTypeId: result?.data?.userTypeId,
+        name: result?.data?.name,
+        password: result?.data?.password,
       });
       setTimeout(() => {
         if (form) {
           form.setFieldsValue({
             email: result?.data?.email,
-            phone: result?.data?.phone,
-            name: result?.data?.user_name,
-            active: result?.data?.active === 1 ? true : false,
-            address: result?.data?.address,
-            userTypeId: result?.data?.userTypeId,
+            name: result?.data?.name,
+            password: result?.data?.password,
           });
         }
       }, 0);
@@ -164,43 +156,29 @@ const UserPage = () => {
       render: (_, __, index) => index + 1,
     },
     {
-      title: "Full Name",
-      dataIndex: "user_name",
-    },
-    {
-      title: "Phone",
-      dataIndex: "phone",
+      title: "Id",
+      dataIndex: "_id",
     },
     {
       title: "Email",
       dataIndex: "email",
     },
     {
-      title: "IsActive",
-      dataIndex: ["active"],
-      render: (active) =>
-        active === 1 ? (
-          <span className="bg-green-600 text-white rounded-lg px-2">
-            Active
-          </span>
-        ) : (
-          <span className="bg-red-600 text-white rounded-lg px-2">
-            Inactive
-          </span>
-        ),
+      title: "Name",
+      dataIndex: "name",
     },
     {
       title: "Action",
       dataIndex: "priceSelling",
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => _handelEdit(record.id)}>
+          <a onClick={() => _handelEdit(record._id)}>
             <Tooltip placement="topLeft" title={"Edit"} color={"#87d068"}>
               <BsFillEyeFill style={{ fontSize: "20px", color: "green" }} />
             </Tooltip>
           </a>
 
-          <a onClick={() => _handelDelete(record.id)}>
+          <a onClick={() => _handelDelete(record._id)}>
             <Tooltip placement="topLeft" title={"Delete"} color={"red"}>
               <MdOutlineCancel style={{ fontSize: "20px", color: "red" }} />
             </Tooltip>
@@ -212,16 +190,12 @@ const UserPage = () => {
   const clearFormState = () => {
     setFormState({
       id: "",
-      phone: "",
-      name: "",
-      active: "",
-      address: "",
-      userTypeId: "",
       email: "",
+      name: "",
+      password: "",
     });
   };
 
-  console.log({ formState });
   return (
     <>
       {/* <Breadcrumb style={{ margin: "16px 0" }}>
@@ -247,14 +221,14 @@ const UserPage = () => {
 
         <CustomTable
           columns={userColumn}
-          dataSource={data?.data?.response?.data || []}
+          dataSource={data?.response?.data || []}
           loading={isLoading}
         />
         {!isLoading && (
           <CustomPagination
             setState={setSearchState}
             state={searchState}
-            totalPage={data?.data?.response?.pagination?.total || 0}
+            totalPage={data?.response?.pagination?.total || 0}
           />
         )}
 

@@ -27,42 +27,8 @@ function getItem(label, key, icon, children) {
 const items = [
   getItem("Dashboard", "/dashboard", <MdDashboardCustomize />),
   getItem("User", "2", <FaUserCircle />, [
-    getItem(
-      "Type",
-      "/dashboard/category"
-      // ,
-      //  <MdRestaurantMenu />, [
-      //     getItem('Category', '/category'),
-      //     getItem('Sub Category', '/subcategory'),
-      // ]
-    ),
-    getItem("List", "/dashboard/user"),
+    getItem("Users", "/dashboard/user"),
   ]),
-  getItem("Markup", "3", <TbCoinTakaFilled />, [
-    getItem("Default", "/dashboard/defaultmarkup"),
-    getItem("Dynamic", "/dashboard/dynamicmarkup"),
-  ]),
-  getItem("Settings", "4", <IoSettings />, [
-    getItem("Marquee", "/dashboard/marquee"),
-    getItem("Banner Type", "/dashboard/banner"),
-    getItem("Advertisement", "/dashboard/advertisement"),
-    getItem("Coin", "/dashboard/coin"),
-    getItem("Coupon", "/dashboard/coupon"),
-  ]),
-  getItem("Template", "5", <MdMarkEmailUnread />, [
-    getItem("Template Type", "/dashboard/templatetype"),
-    getItem("Email Template", "/dashboard/template"),
-  ]),
-  getItem("Product", "6", <MdOutlineProductionQuantityLimits />, [
-    getItem("Product", "/dashboard/product"),
-    getItem("Free Product", "/dashboard/freeproduct"),
-    getItem("Coin Product", "/dashboard/coinproduct"),
-  ]),
-  getItem("Package", "7", <LuPackageOpen />, [
-    getItem("Combo Package", "/dashboard/combopackage"),
-    getItem("Family Package", "/dashboard/familypackage"),
-  ]),
-  // getItem("Users", "/dashboard/user", <FaUserCircle />),
 ];
 
 export default function RootLayout({ children }) {

@@ -19,13 +19,13 @@ const LoginForm = ({ onFinish, setCredentials, isLoading, credentials }) => {
       >
         <div>
           <Input
-            type={"number"}
-            placeholder="01620000000"
-            labelText={"Phone Number"}
+            type={"email"}
+            placeholder="jhon@example.com"
+            labelText={"Email"}
             onChange={(e) => {
               setCredentials({
                 ...credentials,
-                phone: e.target.value,
+                email: e.target.value,
               });
             }}
           />
@@ -56,10 +56,6 @@ const LoginForm = ({ onFinish, setCredentials, isLoading, credentials }) => {
           />
         </div>
       </Form.Item>
-
-      <div className="text-right mt-2">
-        <CommonLink href="/forgotpassword" text={"Forgot Password?"} />
-      </div>
 
       <Form.Item>
         <div className="mt-4">
