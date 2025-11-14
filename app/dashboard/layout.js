@@ -29,6 +29,9 @@ const items = [
   getItem("User", "2", <FaUserCircle />, [
     getItem("Users", "/dashboard/user"),
   ]),
+   getItem("Product", "3", <MdOutlineProductionQuantityLimits />, [
+    getItem("Products", "/dashboard/product"),
+  ])
 ];
 
 export default function RootLayout({ children }) {

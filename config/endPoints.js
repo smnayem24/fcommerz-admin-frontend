@@ -7,4 +7,10 @@ export const API_END_POINTS = {
     updateUserById : API_BASE_URL + '/api/user/update/',
     deleteUserById : API_BASE_URL + '/api/user/delete/',
     createUser: API_BASE_URL + '/api/user/register',
+
+    getAllPaginatedProduct : API_BASE_URL + '/api/product/admin/fetch',
+    getProductById: API_BASE_URL + '/api/product/fetch/',
+    updateProductById : API_BASE_URL + '/api/product/update/',
+    deleteProductById : API_BASE_URL + '/api/product/delete/',
+    createProduct: API_BASE_URL + '/api/product/create',
 } 
