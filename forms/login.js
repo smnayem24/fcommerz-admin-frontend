@@ -22,6 +22,7 @@ const LoginForm = ({ onFinish, setCredentials, isLoading, credentials }) => {
             type={"email"}
             placeholder="jhon@example.com"
             labelText={"Email"}
+            value={credentials.email}
             onChange={(e) => {
               setCredentials({
                 ...credentials,
@@ -47,6 +48,7 @@ const LoginForm = ({ onFinish, setCredentials, isLoading, credentials }) => {
             type={"password"}
             placeholder="**********"
             labelText={"Password"}
+            value={credentials.password}
             onChange={(e) => {
               setCredentials({
                 ...credentials,

@@ -207,7 +207,21 @@ const ProductPage = () => {
       title: "Id",
       dataIndex: "_id",
     },
-
+    {
+      title: "Seller",
+      render: (_, record) => {
+        const seller = record.createdFor;
+        if (!seller) return "N/A";
+        return (
+          <div>
+            <div style={{ fontWeight: 500 }}>{seller.name || "N/A"}</div>
+            <div style={{ fontSize: "12px", color: "#666" }}>
+              {seller.email || ""}
+            </div>
+          </div>
+        );
+      },
+    },
     {
       title: "Name",
       dataIndex: "name",
@@ -294,7 +308,7 @@ const ProductPage = () => {
         )}
 
         <CustomModal
-          title={modalTitle === "Add" ? "Add User" : "Edit User"}
+          title={modalTitle === "Add" ? "Add Product" : "Edit Product"}
           open={isModalOpen.main}
         >
           <Form
@@ -319,7 +333,7 @@ const ProductPage = () => {
           </Form>
         </CustomModal>
 
-        <CustomModal title={"Delete User"} open={isModalOpen.waring}>
+        <CustomModal title={"Delete Product"} open={isModalOpen.waring}>
           <div>
             <div>Are you sure to delete this item?</div>
             <div className="grid grid-cols-1">
