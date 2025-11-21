@@ -21,7 +21,7 @@ const SignInPage = () => {
   const { data: session, status: sessionStatus } = useSession();
   const [messageApi, contextHolder] = message.useMessage();
   const [userCredentials, setUserCredentials] = useState({
-    phone: "",
+    email: "",
     password: "",
   });
   const { postData, isLoading } = usePostData({
@@ -69,23 +69,13 @@ const SignInPage = () => {
             <p className="text-sm mt-4 text-primary">
               If you have an account, please login
             </p>
-            <div className="mt-6">
+            <div className="my-6 md:w-[300px] w-auto">
               <LoginForm
                 onFinish={handleLogin}
                 setCredentials={setUserCredentials}
                 credentials={userCredentials}
                 isLoading={isLoading}
               />
-            </div>
-            <div className="mt-7 grid grid-cols-3 items-center text-gray-500">
-              <hr className="border-gray-500" />
-              <p className="text-center text-sm">OR</p>
-              <hr className="border-gray-500" />
-            </div>
-            <SocialButton btnName="Login with Google" />
-            <div className="text-sm flex justify-between items-center mt-3">
-              <p>If you don&apos;t have an account...</p>
-              <AuthLink btnName="Register" />
             </div>
           </div>
         </div>

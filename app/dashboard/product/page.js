@@ -5,9 +5,9 @@ import CustomPagination from "@/components/pagination";
 import CustomTable from "@/components/table";
 import Button from "@/components/ui/button";
 import { API_END_POINTS } from "@/config/endPoints";
-import UserForm from "@/forms/user";
+import ProductForm from "@/forms/product";
 import UserSearch from "@/forms/userSearch";
-import { useFetchUsers } from "@/hooks/paginated_search/useFetchUsers";
+import { useFetchProducts } from "@/hooks/paginated_search/useFetchProducts";
 import { useDeleteData } from "@/hooks/useDeleteData";
 import { useGetIdData } from "@/hooks/useGetIdData";
 import { usePostData } from "@/hooks/usePostData";
@@ -18,7 +18,7 @@ import React, { useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
 import { MdOutlineCancel } from "react-icons/md";
 
-const UserPage = () => {
+const ProductPage = () => {
   const [form] = Form.useForm();
   const [filter, setFilter] = useState(false);
   const [modalTitle, setModalTitle] = useState("Add");
@@ -32,34 +32,38 @@ const UserPage = () => {
 
   const [formState, setFormState] = useState({
     id: "",
-    email: "",
     name: "",
-    password: "",
+    description: "",
+    price: "",
+    normalPrice: "",
+    discountPrice: "",
+    image: "",
+    createdFor: "",
   });
   const [isModalOpen, setIsModalOpen] = useState({
     main: false,
     waring: false,
   });
 
-  const { data, isLoading, refetch } = useFetchUsers(searchState);
+  const { data, isLoading, refetch } = useFetchProducts(searchState);
 
   const { postData } = usePostData({
-    endpoint: API_END_POINTS.createUser,
+    endpoint: API_END_POINTS.createProduct,
 
     body: removeEmptyKeys(formState),
   });
 
   const { refetchDataById } = useGetIdData({
-    endpoint: API_END_POINTS.getUserById,
+    endpoint: API_END_POINTS.getProductById,
   });
 
   const { putDataById } = usePutData({
-    endpoint: API_END_POINTS.updateUserById,
+    endpoint: API_END_POINTS.updateProductById,
     body: formState,
   });
 
   const { deleteDataById } = useDeleteData({
-    endpoint: API_END_POINTS.deleteUserById,
+    endpoint: API_END_POINTS.deleteProductById,
   });
 
   const _handelEdit = async (id) => {
@@ -72,16 +76,24 @@ const UserPage = () => {
       setModalTitle("Edit");
       setFormState({
         id: id,
-        email: result?.data?.email,
         name: result?.data?.name,
-        password: result?.data?.password,
+        description: result?.data?.description,
+        price: result?.data?.price,
+        normalPrice: result?.data?.normalPrice,
+        discountPrice: result?.data?.discountPrice,
+        image: result?.data?.image,
+        createdFor: result?.data?.createdFor?._id,
       });
       setTimeout(() => {
         if (form) {
           form.setFieldsValue({
-            email: result?.data?.email,
             name: result?.data?.name,
-            password: result?.data?.password,
+            description: result?.data?.description,
+            price: result?.data?.price,
+            normalPrice: result?.data?.normalPrice,
+            discountPrice: result?.data?.discountPrice,
+            image: result?.data?.image,
+            createdFor: result?.data?.createdFor?._id,
           });
         }
       }, 0);
@@ -196,12 +208,39 @@ const UserPage = () => {
       dataIndex: "_id",
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "Seller",
+      render: (_, record) => {
+        const seller = record.createdFor;
+        if (!seller) return "N/A";
+        return (
+          <div>
+            <div style={{ fontWeight: 500 }}>{seller.name || "N/A"}</div>
+            <div style={{ fontSize: "12px", color: "#666" }}>
+              {seller.email || ""}
+            </div>
+          </div>
+        );
+      },
     },
     {
       title: "Name",
       dataIndex: "name",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+    },
+    {
+      title: "DiscountPrice",
+      dataIndex: "discountPrice",
+    },
+    {
+      title: "NormalPrice",
+      dataIndex: "normalPrice",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
     },
     {
       title: "Action",
@@ -269,7 +308,7 @@ const UserPage = () => {
         )}
 
         <CustomModal
-          title={modalTitle === "Add" ? "Add User" : "Edit User"}
+          title={modalTitle === "Add" ? "Add Product" : "Edit Product"}
           open={isModalOpen.main}
         >
           <Form
@@ -278,7 +317,7 @@ const UserPage = () => {
             onFinish={modalTitle === "Add" ? onFinish : onEditFinish}
           >
             <div className="grid grid-cols-1 p-3">
-              <UserForm setCreateState={setFormState} createState={formState} />
+              <ProductForm setCreateState={setFormState} createState={formState} />
               <div className="flex justify-end mt-3">
                 <div
                   style={{ marginRight: "4px" }}
@@ -294,7 +333,7 @@ const UserPage = () => {
           </Form>
         </CustomModal>
 
-        <CustomModal title={"Delete User"} open={isModalOpen.waring}>
+        <CustomModal title={"Delete Product"} open={isModalOpen.waring}>
           <div>
             <div>Are you sure to delete this item?</div>
             <div className="grid grid-cols-1">
@@ -325,4 +364,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default ProductPage;

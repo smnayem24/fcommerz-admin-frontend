@@ -13,7 +13,7 @@ const CustomTable = ({ columns, dataSource, loading, footer, ...rest }) => {
         x: "1000px",
       }}
       pagination={false}
-      rowKey={(dataSource) => dataSource.id}
+      rowKey={(dataSource) => dataSource._id}
       footer={footer}
       {...rest}
     />
